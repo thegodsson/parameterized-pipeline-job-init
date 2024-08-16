@@ -38,7 +38,7 @@ pipeline {
 
   }
   tools {
-    maven 'M396'
+    maven 'M398'
   }
 
 }
