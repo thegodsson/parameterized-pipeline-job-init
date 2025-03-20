@@ -22,6 +22,16 @@ pipeline {
         junit(testResults: 'target/surefire-reports/TEST-*.xml', keepProperties: true, keepTestNames: true)
       }
     }
+
+       stage('Local Deployment') {
+  steps {
+    sh """
+      nohup java -jar target/hello-demo-*.jar > app.log 2>&1 &
+      sleep 5
+      ps aux | grep hello-demo | grep -v grep
+    """
+  }
+}
     
     stage('Integration Testing') {
       steps {
@@ -41,12 +51,7 @@ pipeline {
   }
 }
     
-    stage('Integration Testing') {
-      steps {
-        sh "sleep ${params.SLEEP_TIME}"
-        sh "curl -s http://localhost:${params.APP_PORT}/hello"
-      }
-    }
+
 
 
   }
