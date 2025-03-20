@@ -38,7 +38,7 @@ stage('Integration Testing') {
     sh "sleep ${params.SLEEP_TIME}"
     sh '''#!/bin/bash
     counter=0
-    while ! curl -s http://localhost:${params.APP_PORT}/hello; do
+    while ! curl -s "http://localhost:${params.APP_PORT}/hello"; do
       counter=$((counter+1))
       if [ "$counter" -ge 10 ]; then
         echo "L'application ne répond pas après 10 essais"
