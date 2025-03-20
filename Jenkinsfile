@@ -2,7 +2,7 @@ pipeline {
   agent any
   //environment {
     //APP_PORT = "${params.APP_PORT}"
-  }
+  //}
   stages {
     stage('Maven Version') {
       steps {
