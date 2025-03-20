@@ -23,11 +23,23 @@ pipeline {
       }
     }
     
-    stage('Local Deployment') {
-      steps {
-        sh """ java -jar target/hello-demo-*.jar > /dev/null & """
-      }
-    }
+   stage('Integration Testing') {
+  steps {
+    sh "sleep ${params.SLEEP_TIME}"
+    sh '''
+    counter=0
+    while ! curl -s http://localhost:${params.APP_PORT}/hello; do
+      counter=$((counter+1))
+      if [ "$counter" -ge 10 ]; then
+        echo "L'application ne répond pas après 10 essais"
+        exit 1
+      fi
+      echo "Attente que l'application démarre..."
+      sleep 3
+    done
+    '''
+  }
+}
     
     stage('Integration Testing') {
       steps {
