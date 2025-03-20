@@ -1,12 +1,15 @@
 pipeline {
   agent any
+  environment {
+    APP_PORT = "${params.APP_PORT}"
+  }
   stages {
     stage('Maven Version') {
       steps {
         sh 'echo Print Maven Version'
         sh 'mvn -version'
-        sh "echo Sleep-Time - ${params.SLEEP_TIME}, Port - ${params.APP_PORT}, Branch - ${params.BRANCH_NAME}"
-        //sh "echo Sleep-Time - ${params.SLEEP_TIME}, Branch - ${params.BRANCH_NAME}"
+        //sh "echo Sleep-Time - ${params.SLEEP_TIME}, Port - ${params.APP_PORT}, Branch - ${params.BRANCH_NAME}"
+        sh "echo Sleep-Time - ${params.SLEEP_TIME}, Branch - ${params.BRANCH_NAME}"
       }
     }
 
@@ -33,7 +36,7 @@ pipeline {
    stage('Integration Testing') {
       steps {
         sh "sleep ${params.SLEEP_TIME}"
-        sh "curl -s http://localhost:${params.APP_PORT}/hello"
+        sh "curl -s http://localhost:$APP_PORT/hello"
       }
     }
 
