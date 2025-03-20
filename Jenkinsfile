@@ -33,24 +33,23 @@ pipeline {
   }
 }
     
-    stage('Integration Testing') {
-      steps {
-        sh "sleep ${params.SLEEP_TIME}"
-        sh '''
-        counter=0
-        while ! curl -s http://localhost:${params.APP_PORT}/hello; do
-        counter=$((counter+1))
-        if [ "$counter" -ge 10 ]; then
+stage('Integration Testing') {
+  steps {
+    sh "sleep ${params.SLEEP_TIME}"
+    sh '''#!/bin/bash
+    counter=0
+    while ! curl -s http://localhost:${params.APP_PORT}/hello; do
+      counter=$((counter+1))
+      if [ "$counter" -ge 10 ]; then
         echo "L'application ne répond pas après 10 essais"
         exit 1
-        fi
-        echo "Attente que l'application démarre..."
-        sleep 3
-        done
+      fi
+      echo "Attente que l'application démarre..."
+      sleep 3
+    done
     '''
   }
 }
-    
 
 
 
