@@ -5,7 +5,8 @@ pipeline {
       steps {
         sh 'echo Print Maven Version'
         sh 'mvn -version'
-        sh "echo Sleep-Time - ${params.SLEEP_TIME}, Port - ${params.APP_PORT}, Branch - ${params.BRANCH_NAME}"
+        //sh "echo Sleep-Time - ${params.SLEEP_TIME}, Port - ${params.APP_PORT}, Branch - ${params.BRANCH_NAME}"
+        sh "echo Sleep-Time - ${params.SLEEP_TIME}, Branch - ${params.BRANCH_NAME}"
       }
     }
 
@@ -38,7 +39,7 @@ stage('Integration Testing') {
     sh "sleep ${params.SLEEP_TIME}"
     sh '''#!/bin/bash
     counter=0
-    while ! curl -s "http://localhost:${params.APP_PORT}/hello"; do
+    while ! curl -s "http://localhost:6767/hello"; do
       counter=$((counter+1))
       if [ "$counter" -ge 10 ]; then
         echo "L'application ne répond pas après 10 essais"
